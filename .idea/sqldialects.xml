@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/migrations/20250723214346_create_updated_at_trigger.down.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/migrations/20250723214353_create_users_table.down.sql" dialect="GenericSQL" />
+    <file url="PROJECT" dialect="PostgreSQL" />
+  </component>
+</project>
