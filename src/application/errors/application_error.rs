@@ -47,6 +47,8 @@ impl_from_error!(time::error::Parse, "Time parsing error");
 impl_from_error!(std::num::ParseIntError, "Number parsing error");
 impl_from_error!(std::num::ParseFloatError, "Float parsing error");
 impl_from_error!(bcrypt::BcryptError, "Hashing Password Error");
+impl_from_error!(jsonwebtoken::errors::Error, "JWT Error");
+impl_from_error!(std::env::VarError, "JWT Error");
 
 
 // Special cases for string types
