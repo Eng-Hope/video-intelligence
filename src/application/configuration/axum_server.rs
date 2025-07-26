@@ -6,23 +6,24 @@ use log::error;
 use std::env;
 use std::sync::Arc;
 use tokio::net::TcpListener;
+use crate::users::routes::authentication::authentication;
 
 async fn initialize_axum_server(
     listener: TcpListener,
     state: Arc<AppState>,
 ) -> Result<(), ApplicationError> {
     let app = Router::new()
-        // .nest("/auth", authentication_router())
+        .nest("/auth", authentication())
         .layer(Extension(state)); //state passed here
-    if let Ok(()) = axum::serve(listener, app).await {
-        Ok(())
-    } else {
-        let error = "Could not axum server";
-        error!("{}", error);
-        Err(ApplicationError {
-            error: "Application Boot Error".into(),
-            description: error.into(),
-        })
+    match axum::serve(listener, app).await {
+        Ok(()) => Ok(()),
+        Err(e) => {
+            error!("{}", e);
+            Err(ApplicationError {
+                error: "Application Boot Error".into(),
+                description: e.to_string(),
+            })
+        }
     }
 }
 
@@ -35,17 +36,19 @@ pub async fn run() -> Result<(), ApplicationError> {
         Err(_) => port = String::from("0.0.0.0:8080"),
     };
     //if db initialization fails return error
-    if let Ok(listener) = TcpListener::bind(&port).await {
-        //this is a shared state and can be extracted using extensions
-        let state = Arc::new(AppState { pool });
-        initialize_axum_server(listener, state).await?;
-    } else {
-        let error = "Could not start server ";
-        error!("{} at port {}", error, port);
-        return Err(ApplicationError {
-            error: "Server Error".into(),
-            description: error.into(),
-        });
+    match TcpListener::bind(&port).await {
+        Ok(listener) => {
+            let state = Arc::new(AppState { pool });
+            initialize_axum_server(listener, state).await?;
+            Ok(())
+        },
+        Err(e) => {
+            error!("{}", e.to_string());
+            Err(ApplicationError {
+                error: "Server Error".into(),
+                description: e.to_string(),
+            })
+        }
     }
-    Ok(())
+        //this is a shared state and can be extracted using extensions
 }
