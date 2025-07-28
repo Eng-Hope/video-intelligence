@@ -10,9 +10,9 @@ mod users;
 async fn main() {
     env_logger::init(); // Initialize the logger
     dotenv().ok(); //loads envs
-    match run().await{
+    match run().await {
         Ok(_) => {
-            info!("Application Has Started"); 
+            info!("Application Has Started");
         }
         Err(err) => {
             error!("Application Error: {}", err.description);

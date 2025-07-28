@@ -50,7 +50,6 @@ impl_from_error!(bcrypt::BcryptError, "Hashing Password Error");
 impl_from_error!(jsonwebtoken::errors::Error, "JWT Error");
 impl_from_error!(std::env::VarError, "JWT Error");
 
-
 // Special cases for string types
 impl From<String> for ApplicationError {
     fn from(err: String) -> Self {
@@ -69,8 +68,3 @@ impl From<&str> for ApplicationError {
         }
     }
 }
-
-// You can easily add more error types like this:
-// impl_from_error!(reqwest::Error, "HTTP request error");
-// impl_from_error!(tokio::task::JoinError, "Task join error");
-// impl_from_error!(std::env::VarError, "Environment variable error");

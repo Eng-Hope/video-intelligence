@@ -1,12 +1,12 @@
 use crate::application::configuration::application_state::AppState;
 use crate::application::configuration::database::initialize_database;
 use crate::application::errors::application_error::ApplicationError;
+use crate::users::routes::authentication_routes::authentication;
 use axum::{Extension, Router};
 use log::error;
 use std::env;
 use std::sync::Arc;
 use tokio::net::TcpListener;
-use crate::users::routes::authentication::authentication;
 
 async fn initialize_axum_server(
     listener: TcpListener,
@@ -41,7 +41,7 @@ pub async fn run() -> Result<(), ApplicationError> {
             let state = Arc::new(AppState { pool });
             initialize_axum_server(listener, state).await?;
             Ok(())
-        },
+        }
         Err(e) => {
             error!("{}", e.to_string());
             Err(ApplicationError {
@@ -50,5 +50,5 @@ pub async fn run() -> Result<(), ApplicationError> {
             })
         }
     }
-        //this is a shared state and can be extracted using extensions
+    //this is a shared state and can be extracted using extensions
 }

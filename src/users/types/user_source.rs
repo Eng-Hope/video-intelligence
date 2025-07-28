@@ -1,16 +1,16 @@
-use std::fmt;
 use serde::{Deserialize, Serialize};
+use std::fmt;
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub enum UserSource {
     SYSTEM,
-    GOOGLE
+    GOOGLE,
 }
 
 impl Into<String> for UserSource {
     fn into(self) -> String {
         match self {
             Self::SYSTEM => String::from("SYSTEM"),
-            Self::GOOGLE => String::from("GOOGLE")
+            Self::GOOGLE => String::from("GOOGLE"),
         }
     }
 }

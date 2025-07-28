@@ -1,6 +1,6 @@
+use crate::users::types::role_type::RoleType;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-use crate::users::types::role_type::RoleType;
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct UserResponse {

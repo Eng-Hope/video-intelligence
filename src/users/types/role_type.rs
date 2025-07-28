@@ -1,5 +1,5 @@
-use std::fmt;
 use serde::{Deserialize, Serialize};
+use std::fmt;
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 
 pub enum RoleType {
@@ -9,7 +9,7 @@ pub enum RoleType {
 
 impl Into<String> for RoleType {
     fn into(self) -> String {
-        match self { 
+        match self {
             Self::USER => String::from("USER"),
             Self::APPLICATION => String::from("APPLICATION"),
         }
@@ -25,7 +25,6 @@ impl From<String> for RoleType {
         }
     }
 }
-
 
 impl fmt::Display for RoleType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
